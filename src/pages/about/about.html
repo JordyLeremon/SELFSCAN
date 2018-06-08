@@ -1,56 +1,47 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{ peripheral.name || 'Device' }}</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content class="padding">
-
-  <ion-card>
-    <ion-card-header>
-      {{ peripheral.name || 'Unnamed' }}
-    </ion-card-header>
-    <ion-card-content>
-      {{ peripheral.id }}
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      Services
-    </ion-card-header>
-
-    <ion-list>
-      <ion-item *ngFor="let service of peripheral.services">
-        {{service}}
-      </ion-item>
-    </ion-list>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      Details
-    </ion-card-header>
-    <ion-card-content>
-      <pre>{{peripheral | json }}</pre>
-    </ion-card-content>
-  </ion-card>
-  <ion-item>
-    <ion-label>Power</ion-label>
-    <ion-toggle [(ngModel)]="power" (ionChange)="onPowerSwitchChange($event);"></ion-toggle>
-  </ion-item>
-
-  <ion-item>
-    <ion-badge item-end color="secondary">{{brightness}}</ion-badge>
-    <ion-range max="255" debounce="30" [(ngModel)]="brightness"  (ionChange)="setBrightness($event)">
-      <ion-icon range-left small name="sunny"></ion-icon>
-      <ion-icon range-right name="sunny"></ion-icon>
-    </ion-range>
-  </ion-item>
-</ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <p>{{ statusMessage }}</p>
-  </ion-toolbar>
-</ion-footer>
+    <ion-navbar>
+      <ion-title>{{ peripheral.name || 'Device' }}</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content class="padding">
+  
+    <ion-card>
+      <ion-card-header>
+        {{ peripheral.name || 'Unnamed' }}
+      </ion-card-header>
+      <ion-card-content>
+        {{ peripheral.id }}
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card>
+      <ion-card-header>
+        Services
+      </ion-card-header>
+  
+      <ion-list>
+        <ion-item *ngFor="let service of peripheral.services">
+          {{service}}
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  
+    <ion-card>
+      <ion-card-header>
+        Details
+      </ion-card-header>
+      <ion-card-content>
+        <pre>{{peripheral | json }}</pre>
+      </ion-card-content>
+    </ion-card>
+   >
+  
+    
+  </ion-content>
+  
+  <ion-footer>
+    <ion-toolbar>
+      <p>{{ statusMessage }}</p>
+    </ion-toolbar>
+  </ion-footer>

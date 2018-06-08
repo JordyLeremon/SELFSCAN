@@ -3,6 +3,7 @@ import { Component, NgZone } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { AboutPage } from '../about/about';
+import { ContactPage } from '../contact/contact';
 
 @Component({
   selector: 'page-home',
@@ -19,6 +20,7 @@ export class HomePage {
               private ble: BLE,
               private ngZone: NgZone) { 
   }
+
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter');
@@ -68,5 +70,10 @@ export class HomePage {
       device: device
     });
   }
-
+  ionViewDidLoad() {
+    console.log("ionViewDidLoad MyMoviesPage");
+  }
+  findData() {
+    this.navCtrl.push(ContactPage);
+  }
 }

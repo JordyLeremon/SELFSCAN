@@ -1,17 +1,29 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
+    <ion-buttons end>
+     
+      <button ion-button (click)="listenDevice(peripheral, context)">
+        Read
+      </button>
+      
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
-</ion-content>
+<ion-content class="padding">
+  
+    <ion-list> 
+          <button ion-item *ngFor="let peripheral of devices" (click)="deviceSelected(peripheral)">
+        <h1>{{ peripheral.id }}</h1>
+        <p>{{ temperature }}</p>
+        <p>{{lux }}</p>
+        <p> {{ moisture }}</p>
+        <p>{{ fertility }}</p>
+          </button>
+      
+    </ion-list> 
+  
+   
+  
+    
+  </ion-content>
