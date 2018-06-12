@@ -5,7 +5,7 @@
   </ion-header>
   
   <ion-content class="padding">
-  
+      
     <ion-card>
       <ion-card-header>
         {{ peripheral.name || 'Unnamed' }}
@@ -35,7 +35,16 @@
         <pre>{{peripheral | json }}</pre>
       </ion-card-content>
     </ion-card>
-   >
+    <ion-card>
+      <ion-card-header>
+        Details++
+      </ion-card-header>
+      <ion-card-content>
+          <p>{{firmware}}</p>
+         <p>{{data}}</p>
+        </ion-card-content>
+    </ion-card>
+   
   
     
   </ion-content>
