@@ -1,0 +1,64 @@
+<!--
+  Generated template for the EnvoiPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    
+      <ion-navbar>
+        <ion-title>envoi</ion-title>
+      </ion-navbar>
+    
+    </ion-header>
+    
+    
+    <ion-content padding>
+      <ion-list>
+        <ion-item>
+          <ion-label>nb_capteur:</ion-label>
+          <ion-input type="text" [(ngModel)]="this.data9.nb_capteur" name="nb_capteur" ></ion-input>
+        </ion-item>
+      </ion-list>
+        <ion-list>
+          <ion-label>Valeur</ion-label>
+          <ion-item>
+            <ion-label>Temp</ion-label>
+            <ion-checkbox [(ngModel)]="this.data1.VTemp"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Lux</ion-label>
+            <ion-checkbox [(ngModel)]="this.data3.VLux"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Ec</ion-label>
+            <ion-checkbox [(ngModel)]="this.data5.VEc"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>HR</ion-label>
+            <ion-checkbox [(ngModel)]="this.data7.VHR"></ion-checkbox>
+          </ion-item>
+          <ion-label>Moyenne</ion-label>
+          <ion-item>
+            <ion-label>Temp</ion-label>
+            <ion-checkbox [(ngModel)]="this.data2.MTemp" ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Lux</ion-label>
+            <ion-checkbox [(ngModel)]="this.data4.MLux"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Ec</ion-label>
+            <ion-checkbox [(ngModel)]="this.data6.MEc" ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>HR</ion-label>
+            <ion-checkbox [(ngModel)]="this.data8.MHR"></ion-checkbox>
+          </ion-item>
+        
+        
+      
+      </ion-list>
+      <button id="choiceButton" ion-button color="tahiry" round (click)='Submit()'>Valider</button>
+    </ion-content>
+    

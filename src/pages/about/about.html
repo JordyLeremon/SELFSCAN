@@ -1,6 +1,7 @@
 <ion-header>
     <ion-navbar>
       <ion-title>{{ peripheral.name || 'Device' }}</ion-title>
+      
     </ion-navbar>
   </ion-header>
   
@@ -10,43 +11,69 @@
       <ion-card-header>
         {{ peripheral.name || 'Unnamed' }}
       </ion-card-header>
-      <ion-card-content>
-        {{ peripheral.id }}
-      </ion-card-content>
     </ion-card>
   
-    <ion-card>
-      <ion-card-header>
-        Services
-      </ion-card-header>
   
-      <ion-list>
-        <ion-item *ngFor="let service of peripheral.services">
-          {{service}}
-        </ion-item>
-      </ion-list>
-    </ion-card>
-  
-    <ion-card>
-      <ion-card-header>
-        Details
-      </ion-card-header>
-      <ion-card-content>
-        <pre>{{peripheral | json }}</pre>
-      </ion-card-content>
+    <ion-card>          
+        <h1>Température : {{ temperature | formatTemperatureC }}</h1>
+        <h1>Humidité : {{moisture}} %</h1>
+        <h1>Luminosité : {{light}} lux</h1>
+        <h1>Conductivité : {{conductivity}} mho </h1>
     </ion-card>
     <ion-card>
-      <ion-card-header>
-        Details++
-      </ion-card-header>
-      <ion-card-content>
-          <p>{{firmware}}</p>
-         <p>{{data}}</p>
-        </ion-card-content>
-    </ion-card>
+    <ion-card-content>
+  <ion-item>
+    <ion-label>userId</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-select  [(ngModel)]="userId" >
+      <ion-option name="userId" >{{ userId }}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label>Mac_Address</ion-label>
+      <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+      <ion-select  [(ngModel)]="this.data1.Mac_Address" >
+        <ion-option name="Mac_Address" >{{ peripheral.id  }}</ion-option>
+      </ion-select>
+    </ion-item>
+  <ion-item>
+      <ion-label>date</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYYTHH:mm:ss" [(ngModel)]="this.data1.date" name="myDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>SerialNumber</ion-label>
+      <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+      <ion-select  [(ngModel)]="SerialNumber" >
+        <ion-option name="SerialNumber" >{{ SerialNumber }}</ion-option>
+      </ion-select>
+    </ion-item>
    
-  
-    
+      <ion-item>
+          <ion-label>sensorName</ion-label>
+          <ion-input type="text" [(ngModel)]="this.data1.sensorName" name="sensorName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Lat</ion-label>
+          <ion-select  [(ngModel)]="this.data1.Lat" >
+          <ion-option name="Lat" >{{ lat }}</ion-option>
+        </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Lng</ion-label>
+          <ion-select  [(ngModel)]="this.data1.Lng" >
+          <ion-option name="Lng" >{{ lng }}</ion-option>
+        </ion-select>
+        </ion-item>
+
+        <button  ion-button color="tahiry" round (click)='Submit()'>Valider</button>
+        
+        <!--<p>{{ device.id }}</p>-->
+       <!-- <b>{{data.response}}</b>-->
+        
+    </ion-card-content>
+  </ion-card>
+      
+      
   </ion-content>
   
   <ion-footer>

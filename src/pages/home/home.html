@@ -13,24 +13,20 @@
   </ion-header>
   
   <ion-content>
-      <ion-card>
-          <ion-card-content>
-      <button ion-button icon-left full (click)="findData()">
-          <ion-icon name="search"></ion-icon>
-          Read Data
-        </button>
-      </ion-card-content>
-    </ion-card>
+
 
      <ion-list> 
       <button ion-item *ngFor="let device of devices" (click)="deviceSelected(device)">
         <h2>{{ device.name || 'Unnamed' }}</h2>
         <p>{{ device.id }}</p>
         <p>RSSI: {{ device.rssi }}</p>
+        
       </button>  
+      
+     
      </ion-list> 
-  
-  
+     
+     
   </ion-content>
   
   <ion-footer>

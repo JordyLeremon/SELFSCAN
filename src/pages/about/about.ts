@@ -1,19 +1,22 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import {Buffer} from 'buffer';
 import {debug} from 'debug';
+import { Geolocation } from '@ionic-native/geolocation';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import * as moment from 'moment';
 import {DeviceData} from 'node-mi-flora/lib/device-data';
 
-// Bluetooth UUIDs
-const DATA_SERVICE_UUID = '0000120400001000800000805f9b34fb';
-const DATA_CHARACTERISTIC_UUID = '00001a0100001000800000805f9b34fb';
-const FIRMWARE_CHARACTERISTIC_UUID = '00001a0200001000800000805f9b34fb';
-const REALTIME_CHARACTERISTIC_UUID = '00001a0000001000800000805f9b34fb';
-const REALTIME_META_VALUE = Buffer.from([0xA0, 0x1F]);
 
-const SERVICE_UUIDS = [DATA_SERVICE_UUID];
-const CHARACTERISTIC_UUIDS = [DATA_CHARACTERISTIC_UUID, FIRMWARE_CHARACTERISTIC_UUID, REALTIME_CHARACTERISTIC_UUID];
+// Bluetooth UUIDs
+
+const READ_SERVICE_UUID= '1204';
+const READ_CHARACTERISTIC_UUID= '1a01';
+const WRITE_SERVICE_UUID= '1204';
+const WRITE_CHARACTERISTIC_UUID= '1a00';
+const REALTIME_META_VALUE = new Uint8Array([0xA0,0x1F]).buffer;
+
 
 
 @Component({
@@ -21,24 +24,58 @@ const CHARACTERISTIC_UUIDS = [DATA_CHARACTERISTIC_UUID, FIRMWARE_CHARACTERISTIC_
   templateUrl: 'about.html'
 })
 export class AboutPage {
+
+  //définitions des variables
+
   peripheral: any = {};
   temperature: number;
+  moisture: number;
+  locate: string;
+  light: number;
+  conductivity: number;
+  data1:any = {};
+  lat: any;
+  lng: any;
+  userId: any;
+  date: any;
+  SerialNumber: any;
+  
+
   statusMessage: string;
     constructor(public navCtrl: NavController, 
       public navParams: NavParams, 
       private ble: BLE,
+      private toastCtrl: ToastController,
       private alertCtrl: AlertController,
+      public http: Http,
+      public geo: Geolocation,
       private ngZone: NgZone) {
+        this.data1.Mac_Address= '';
+        this.data1.date= moment().format();
+        this.data1.sensorName= '';
+        this.data1.Lat= '';
+        this.data1.Lng= '';
+        this.data1.response = '';
+        this.userId = navParams.get('userId');
+        this.SerialNumber= navParams.get('SerialNumber');
+        
+      
+        this.http = http;
         let device = navParams.get('device');
         
             this.setStatus('Connecting to ' + device.name || device.id);
         
             // This is not a promise, the device can call disconnect after it connects, so it's an observable
             this.ble.connect(device.id).subscribe(
+              
               peripheral => this.onConnected(peripheral),
-              peripheral => this.showAlert('Disconnected', 'The peripheral unexpectedly disconnected')
+              peripheral => setTimeout(this.setStatus.bind(this), 600, 'The peripheral unexpectedly disconnected'),
+              
+              
             );
-        
+           
+  
+           
           }
           
         
@@ -46,97 +83,92 @@ export class AboutPage {
           onConnected(peripheral) {
         
             this.peripheral = peripheral;
-            if (peripheral.state === 'disconnected') {
-              this.peripheral = peripheral;
-              peripheral.connect();
-              peripheral.once('connect', function () {
-                this.listenDevice(peripheral, this);
-              }.bind(this));
-              console.log(JSON.stringify(peripheral, null, 2));
-              }
-            else{
             this.setStatus('Connected to ' + (peripheral.name || peripheral.id));
-            }
-            // Subscribe for notifications when the temperature changes
-            //this.ble.startNotification(this.peripheral.id, DATA_SERVICE_UUID, DATA_CHARACTERISTIC_UUID).subscribe(
-              //data => this.listenDevice(peripheral, this),
-              //() => this.showAlert('Unexpected Error', 'Failed to subscribe for temperature changes')
-            //)
-        
+            
+            /*let subscription = this.ble.startNotification(peripheral.id, WRITE_CHARACTERISTIC_UUID, READ_CHARACTERISTIC_UUID);
+            
+                    subscription.subscribe(buffer => {
+                        let data = new Uint32Array(buffer);
+                        console.log(data[0]); 
+                    })*/
+
+            this.ble.write(this.peripheral.id, WRITE_SERVICE_UUID, WRITE_CHARACTERISTIC_UUID, REALTIME_META_VALUE).then(
+              data => this.onTemperatureChange(REALTIME_META_VALUE),
+              () => this.showAlert('Unexpected Error', 'nothing')
+            )
+           
             // Read the current value of the temperature characteristic
-            //this.ble.read(this.peripheral.id, DATA_SERVICE_UUID, DATA_CHARACTERISTIC_UUID).then(
-              //data => this.onTemperatureChange(data),
-              //() => this.showAlert('Unexpected Error', 'Failed to get temperature')
-            //)
+            this.ble.read(this.peripheral.id, READ_SERVICE_UUID, READ_CHARACTERISTIC_UUID).then(
+              data => this.onTemperatureChange(data),
+              () => this.showAlert('Unexpected Error', 'Failed to get temperature')
+            )
+            // Subscribe for notifications when the temperature changes
             
+            //this.ble.startNotification(this.peripheral.id, '1a00', '1a01').subscribe(buffer => { 
+             // console.log(String.fromCharCode.apply(null, new Uint8Array(buffer))); });
+           
           }
-          listenDevice(peripheral, context) {
-            peripheral.discoverSomeServicesAndCharacteristics(SERVICE_UUIDS, CHARACTERISTIC_UUIDS, function (error, services, characteristics) {
-              characteristics.forEach(function (characteristic) {
-                switch (characteristic.uuid) {
-                  case DATA_CHARACTERISTIC_UUID:
-                    characteristic.read(function (error, data) {
-                      context.parseData(peripheral, data);
-                    });
-                    break;
-                  case FIRMWARE_CHARACTERISTIC_UUID:
-                    characteristic.read(function (error, data) {
-                      context.parseFirmwareData(peripheral, data);
-                    });
-                    break;
-                  case REALTIME_CHARACTERISTIC_UUID:
-                    debug('enabling realtime');
-                    characteristic.write(REALTIME_META_VALUE, false);
-                    break;
-                  default:
-                    debug('found characteristic uuid %s but not matched the criteria', characteristic.uuid);
+        
+          onTemperatureChange(buffer:ArrayBuffer) {
+            
+                // Temperature is a 4 byte floating point value
+                var data = new Uint8Array(buffer);
+                console.log(data[0]);
+            
+                this.ngZone.run(() => {
+                  this.temperature = (data[1] * 256 + data[0]) / 10;
+                  this.moisture = data[7];
+                  this.light =  data[4] * 256 + data[3] ;
+                  this.conductivity = data[9] * 256 + data[8];
+                  
+                });
+                
+            
+              }
+          
+
+        
+              Submit() {
+                var link = 'http://selfeden.fr/api1.php';
+                var myData = JSON.stringify({userId: this.userId,Mac_Address: this.data1.Mac_Address,date: this.data1.date,SerialNumber: this.SerialNumber, sensorName: this.data1.sensorName,Lat: this.data1.Lat, Lng: this.data1.Lng});
+                
+                let headers = new Headers(
+                  {
+                    'Content-Type' : 'application/json'
+                  });
+                let options = new RequestOptions({ headers: headers });
+                
+              
+                
+                return new Promise((resolve, reject) => {
+                  this.http.post(link, myData, options)
+                  .toPromise()
+                  .then((response) =>
+                  {
+                    console.log('API Response : ', response.json());
+                    resolve(response.json());
+                  })
+                  .catch((error) =>
+                  {
+                    console.error('API Error : ', error.status);
+                    console.error('API Error : ', JSON.stringify(error));
+                    reject(error.json());
+                  });
+                });
+                
                 }
-              });
-            });
-          }
-        
-          parseData(peripheral, data) {
-            debug('data:', data);
-            
-            let temperature = data.readUInt16LE(0) / 10;
-            let lux = data.readUInt32LE(3);
-            let moisture = data.readUInt16BE(6);
-            let fertility = data.readUInt16LE(8);
-            let deviceData = new DeviceData(peripheral.id,
-                                            temperature,
-                                            lux,
-                                            moisture,
-                                            fertility);
           
-            debug('temperature: %s °C', temperature);
-            debug('Light: %s lux', lux);
-            debug('moisture: %s %', moisture);
-            debug('fertility: %s µS/cm', fertility);
-          
-            debug.emit('data', deviceData);
-          }
-          parseFirmwareData(peripheral, data) {
-            debug('firmware data:', data);
-            let firmware = {
-              deviceId: peripheral.id,
-              batteryLevel: parseInt(data.toString('hex', 0, 1), 16),
-              firmwareVersion: data.toString('ascii', 2, data.length)
-            };
-            debug.emit('firmware', firmware);
-          }
-          /*onTemperatureChange(REALTIME_META_VALUE) {
-        
-            // Temperature is a 4 byte floating point value
-            let data = REALTIME_META_VALUE.readUInt16LE(0) / 10;
-            console.log(data[0]);
-        
-            this.ngZone.run(() => {
-              this.temperature = data[0];
-            });
-        
-          }*/
-      
           // Disconnect peripheral when leaving the page
+         
+          ionViewDidLoad() {
+           
+            console.log("ionViewDidLoad AboutPage");
+            this.geo.getCurrentPosition().then( pos => {
+              this.lat = pos.coords.latitude;
+              this.lng = pos.coords.longitude;
+            }).catch( err => console.log(err));
+          }
+          
           ionViewWillLeave() {
             console.log('ionViewWillLeave disconnecting Bluetooth');
             this.ble.disconnect(this.peripheral.id).then(
@@ -144,7 +176,8 @@ export class AboutPage {
               () => console.log('ERROR disconnecting ' + JSON.stringify(this.peripheral))
             )
           }
-        
+       
+
           showAlert(title, message) {
             let alert = this.alertCtrl.create({
               title: title,

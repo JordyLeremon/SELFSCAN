@@ -1,9 +1,10 @@
 import { BLE } from '@ionic-native/ble';
 import { Component, NgZone } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-home',
@@ -13,12 +14,18 @@ export class HomePage {
   
   
   devices: any[] = [];
+  userId: any[] = [];
+  SerialNumber: any[] = [];
   statusMessage: string;
 
   constructor(public navCtrl: NavController, 
               private toastCtrl: ToastController,
+              public navParams: NavParams, 
+              private geolocation: Geolocation,
               private ble: BLE,
               private ngZone: NgZone) { 
+                this.userId = navParams.get('userId');
+                this.SerialNumber = navParams.get('SerialNumber');
   }
 
 
@@ -67,13 +74,39 @@ export class HomePage {
   deviceSelected(device) {
     console.log(JSON.stringify(device) + ' selected');
     this.navCtrl.push(AboutPage, {
-      device: device
+      device: device,
+      userId: this.userId,
+      SerialNumber: this.SerialNumber
+    });
+    
+    
+  }
+  
+  
+  
+    
+  
+
+  getLocation(){
+    this.geolocation.getCurrentPosition().then((res) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+      //let location= 'lat'+ res.coords.latitude +'lang'+ res.coords.longitude;
+      let location='lat '+res.coords.latitude+' lang '+res.coords.longitude;
+      let toast = this.toastCtrl.create({
+        message: location,
+        duration: 3000
+      });
+      toast.present();
+
+    }).catch((error) => {
+    console.log('Error getting location', error);
     });
   }
   ionViewDidLoad() {
-    console.log("ionViewDidLoad MyMoviesPage");
+    console.log("ionViewDidLoad AboutPage");
+    //this.getLocation();
+    
   }
-  findData() {
-    this.navCtrl.push(ContactPage);
-  }
+  
 }

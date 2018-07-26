@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-navbar>
+      <ion-buttons end>
+       
+        
+        
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content class="padding">
+    
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+      <ion-label>userId</ion-label>
+      <ion-input type="number" [(ngModel)]="this.data.userId" name="userId"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Mac_Address</ion-label>
+        <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+        <ion-select  [(ngModel)]="this.data.Mac_Address" >
+          <ion-option name="Mac_Address" >{{ device.id  }}</ion-option>
+        </ion-select>
+      </ion-item>
+    <ion-item>
+        <ion-label>date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYYTHH:mm:ss" [(ngModel)]="this.data.date"name="myDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+          <ion-label>SerialNumber</ion-label>
+          <ion-input type="number" [(ngModel)]="this.data.SerialNumber" name="SerialNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>sensorName</ion-label>
+            <ion-input type="text" [(ngModel)]="this.data.sensorName" name="sensorName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Lat</ion-label>
+            <ion-select  [(ngModel)]="this.data.Lat" >
+            <ion-option name="Lat" >{{ lat }}</ion-option>
+          </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Lng</ion-label>
+            <ion-select  [(ngModel)]="this.data.Lng" >
+            <ion-option name="Lng" >{{ lng }}</ion-option>
+          </ion-select>
+          </ion-item>
+
+          <button  ion-button color="tahiry" round (click)='Submit()'>Valider</button>
+          
+          <!--<p>{{ device.id }}</p>-->
+          <b>{{data.response}}</b>
+          
+      </ion-card-content>
+      
+      
+    </ion-card>
+    <button ion-button  (click)="test()">Ok</button>
+    <button ion-button  [navPush]="AboutPage">Ok</button>
+    
+    
+      
+    </ion-content>
+  

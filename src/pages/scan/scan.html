@@ -1,0 +1,128 @@
+<!--
+  Generated template for the ScanPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>scan</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+      <ion-input type="text" placeholder="MY QR Code data" [(ngModel)]="qrData">
+      </ion-input>
+    </ion-item>
+    <button ion-button  icon-left (click)="createCode()"><ion-icon name="barcode"></ion-icon>Create Code</button>
+    <button ion-button  icon-left (click)="scanCode()" color="secondary"><ion-icon name="qr-scanner"></ion-icon>Scan Code</button>
+   
+    <ion-card *ngIf="createdCode">
+      <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
+      <ion-card-content>
+        <p>Value: {{ createdCode }}</p>
+      </ion-card-content>
+    </ion-card>
+   
+    <ion-card *ngIf="scannedCode">
+      <ion-card-content>
+        Result from Scan: {{ scannedCode }}
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+            <ion-item>
+                    <ion-label>Mac_Address 1</ion-label>
+                    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+                    <ion-input type="text" [(ngModel)]="this.data1.Mac_Address" name="Mac_Address" ></ion-input>
+            </ion-item>
+            <ion-item>
+                    <ion-label>Mac_Address 2</ion-label>
+                    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+                    <ion-input type="text" [(ngModel)]="this.data2.Mac_Address" name="Mac_Address2" ></ion-input>
+            </ion-item>
+            <ion-item>
+                   <ion-label>Mac_Address 3</ion-label>
+                   <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+                   <ion-input type="text" [(ngModel)]="this.data3.Mac_Address" name="Mac_Address3" ></ion-input>
+          </ion-item>
+          <ion-item>
+                   <ion-label>Mac_Address 4</ion-label>
+                   <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+                   <ion-input type="text" [(ngModel)]="this.data4.Mac_Address" name="Mac_Address4" ></ion-input>
+          </ion-item>
+      <ion-item>
+        <ion-label>Mac_Address 5</ion-label>
+        <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+        <ion-input type="text" [(ngModel)]="this.data5.Mac_Address" name="Mac_Address5" ></ion-input>
+  </ion-item>
+  <ion-item>
+        <ion-label>Mac_Address 6</ion-label>
+        <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+        <ion-input type="text" [(ngModel)]="this.data6.Mac_Address" name="Mac_Address6" ></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Mac_Address 7</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data7.Mac_Address" name="Mac_Address7" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Mac_Address 8</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data8.Mac_Address" name="Mac_Address8" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Mac_Address 9</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data9.Mac_Address" name="Mac_Address9" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Mac_Address 10</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data10.Mac_Address" name="Mac_Address10" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Mac_Address 11</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data11.Mac_Address" name="Mac_Address11" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Mac_Address 12</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data12.Mac_Address" name="Mac_Address12" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Mac_Address 13</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data13.Mac_Address" name="Mac_Address13" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Mac_Address 14</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data14.Mac_Address" name="Mac_Address14" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>N°serie</ion-label>
+    <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+    <ion-input type="text" [(ngModel)]="this.data15.Mac_Address" name="Mac_Address15" ></ion-input>
+  </ion-item>
+  </ion-card>
+  <ion-card >
+      <ion-item>
+              <ion-label>Sim_Card</ion-label>
+              <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+              <ion-input type="text" [(ngModel)]="this.data16.Sim_Card" name="Sim_Card" ></ion-input>
+      </ion-item>
+       <ion-item>
+              <ion-label>userId</ion-label>
+              <!--<ion-input type="text" [(ngModel)]="this.data.Mac_Address" name="Mac_Address"></ion-input>-->
+              <ion-input type="text" [(ngModel)]="this.data17.Num_user" name="Num_user" ></ion-input>
+      </ion-item>
+      
+  </ion-card>
+    <button id="choiceButton" ion-button color="tahiry" round (click)='Submit()'>Valider</button>
+    <button id="choiceButton" ion-button color="tahiry" round (click)='nextpage()'>Valider</button>
+  </ion-content>

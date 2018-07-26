@@ -2,9 +2,7 @@
   <ion-navbar>
     <ion-buttons end>
      
-      <button ion-button (click)="listenDevice(peripheral, context)">
-        Read
-      </button>
+      
       
     </ion-buttons>
   </ion-navbar>
@@ -12,16 +10,23 @@
 
 <ion-content class="padding">
   
-    <ion-list> 
-          <button ion-item *ngFor="let peripheral of devices" (click)="deviceSelected(peripheral)">
-        <h1>{{ peripheral.id }}</h1>
-        <p>{{ temperature }}</p>
-        <p>{{lux }}</p>
-        <p> {{ moisture }}</p>
-        <p>{{ fertility }}</p>
-          </button>
-      
-    </ion-list> 
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+    <ion-label>userId</ion-label>
+    <ion-input type="text" [(ngModel)]="userId" name="userId"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>N° Série :</ion-label>
+    <ion-input type="text" [(ngModel)]="SerialNumber" name="SerialNumber"></ion-input>
+  </ion-item>
+  
+      <button ion-button icon-left full (click)="nextPage()">
+        <ion-icon name="search"></ion-icon>
+        Ok
+      </button>
+    </ion-card-content>
+  </ion-card>
   
    
   

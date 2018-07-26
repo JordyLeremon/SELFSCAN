@@ -4,12 +4,19 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import { ContactPage } from '../pages/contact/contact';
+import { AboutPage } from '../pages/about/about';
+import { EnvoiPage } from '../pages/envoi/envoi';
+import { AccueilPage } from '../pages/accueil/accueil';
+import { ScanPage } from '../pages/scan/scan';
+
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = HomePage;
+  rootPage: any = AccueilPage;
 
   pages: Array<{title: string, component: any}>;
 
