@@ -9,11 +9,13 @@ import {HomePage} from '../home/home';
 })
 export class ContactPage {
 
+  //Déclaration des variables
   peripheral: any = {};
   userId: any[] = [];
   SerialNumber: any[] = [];
   statusMessage: string;
   data2:any = {};
+  
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     private toastCtrl: ToastController,
@@ -22,9 +24,12 @@ export class ContactPage {
     
 }
 
+// Méthode permettant de charger la page 
 ionViewDidLoad() {
   console.log("ionViewDidLoad HomePage");
 }
+
+//Méthode nous permettant d'aller et d'envoyer des informations sur une autre page
 nextPage() {
   this.navCtrl.push(HomePage,{
   userId: this.userId,

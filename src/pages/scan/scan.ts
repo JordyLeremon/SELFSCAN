@@ -11,6 +11,8 @@ import { EnvoiPage } from '../envoi/envoi';
   templateUrl: 'scan.html'
 })
 export class ScanPage {
+
+  //Déclaration des variables
   qrData = null;
   createdCode = null;
   scannedCode: string;
@@ -31,9 +33,11 @@ export class ScanPage {
   data15: any = {};
   data16: any = {};
   data17: any = {};
+
   constructor(public navCtrl: NavController, private barcodeScanner: BarcodeScanner, public navParams: NavParams, 
     public http: Http) {
 
+      //Assignation des variables
       this.data1.Mac_Address = '';
       this.data2.Mac_Address = '';
       this.data3.Mac_Address = '';
@@ -51,14 +55,15 @@ export class ScanPage {
       this.data15.Mac_Address = '';
       this.data16.Sim_Card = '';
       this.data17.Num_user = '';
-      
       this.http= http;
 
   }
+  //Méthode permettant de créer un QRCode
   createCode() {
     this.createdCode = this.qrData;
   }
- 
+
+  //Méthode permettant de scanner un QRCode
   scanCode() {
     this.barcodeScanner.scan().then(barcodeData => {
       this.scannedCode = barcodeData.text;
@@ -66,11 +71,12 @@ export class ScanPage {
         console.log('Error: ', err);
     });
   }
-  
-Submit() {
 
-  var link = 'http://selfeden.fr/api2.php';
-  
+//Fonction qui permet d'envoyer les informations dans la base de données
+Submit() {
+//variable contenant le lien de notre page php(page dans laquelle nous effectuer chacune des requêtes)
+  var link = 'http://selfeden.fr/apiTest.php';
+  //variable contenant les données que nous allons poster
   var myData = JSON.stringify({Mac_Address: this.data1.Mac_Address, Mac_Address2:  this.data2.Mac_Address, Mac_Address3:  this.data3.Mac_Address, Mac_Address4:  this.data4.Mac_Address, Mac_Address5:  this.data5.Mac_Address, Mac_Address6:  this.data6.Mac_Address, Mac_Address7:  this.data7.Mac_Address, Mac_Address8:  this.data8.Mac_Address, Mac_Address9:  this.data9.Mac_Address, Mac_Address10:  this.data10.Mac_Address, Mac_Address11:  this.data11.Mac_Address, Mac_Address12:  this.data12.Mac_Address, Mac_Address13:  this.data13.Mac_Address, Mac_Address14:  this.data14.Mac_Address, Mac_Address15:  this.data15.Mac_Address, Sim_Card: this.data16.Sim_Card, Num_user: this.data17.Num_user});
   
   
@@ -86,7 +92,7 @@ Submit() {
   
   
   
-  
+  //Méthode nous permettant d'effectuer nos post
   return new Promise((resolve, reject) => {
   
   this.http.post(link, myData, options)
@@ -121,10 +127,12 @@ Submit() {
   }
   
   
-
+  //Méthode nous permettant d'aller sur une autre page 
   nextpage(){
     this.navCtrl.push(EnvoiPage)
   }
+
+  // Méthode permettant de charger la page
   ionViewDidLoad() {
     console.log('ionViewDidLoad ScanPage');
   }

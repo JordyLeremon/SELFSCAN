@@ -15,7 +15,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'envoi.html',
 })
 export class EnvoiPage {
-  
+    //Déclaration des variables
     data1: any = {};
     data2: any = {};
     data3: any = {};
@@ -28,6 +28,7 @@ export class EnvoiPage {
    
   
     constructor(public navCtrl: NavController, public navParams: NavParams,  public http: Http) {
+      //Assignation des variables
       this.data1.VTemp = '';
       this.data2.MTemp = '';
       this.data3.VLux = '';
@@ -40,13 +41,13 @@ export class EnvoiPage {
   
       this.http = http;
     }
-  
+
+
+    //Méthode qui permet d'envoyer les informations dans la base de données
     Submit() {
-  
-      
-  
-      var link = 'http://selfeden.fr/api3.php';
-      
+      //variable contenant le lien de notre page php(page dans laquelle nous effectuer chacune des requêtes)
+      var link = 'http://selfeden.fr/apiConfig.php';
+      //variable contenant les données que nous allons poster
       var myData = JSON.stringify({VTemp: this.data1.VTemp, VLux:  this.data3.VLux, VEc:  this.data5.VEc,  VHR:  this.data7.VHR, MTemp: this.data2.MTemp, MLux:  this.data4.MLux, MEc:  this.data6.MEc, MHR:  this.data8.MHR, nb_capteur: this.data9.nb_capteur});
       
       console.log(myData);
@@ -61,9 +62,7 @@ export class EnvoiPage {
       
       let options = new RequestOptions({ headers: headers });
       
-      
-      
-      
+      //Méthode nous permettant d'effectuer nos post
       return new Promise((resolve, reject) => {
       
       this.http.post(link, myData, options)
@@ -96,6 +95,8 @@ export class EnvoiPage {
       
       
       }
+
+    // Méthode permettant de charger la page 
     ionViewDidLoad() {
       console.log('ionViewDidLoad EnvoiPage');
     }

@@ -18,11 +18,14 @@ import { Http, Headers, RequestOptions } from '@angular/http';
   templateUrl: 'send.html',
 })
 export class SendPage {
+  //Déclaration des variables
   data:any = {};
   lat: any;
   lng: any;
   device: string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http,public geo: Geolocation) {
+    //Assignation des variables
     this.device = this.navParams.get('device');
     this.data.userId= '';
     this.data.Mac_Address= '';
@@ -32,19 +35,16 @@ export class SendPage {
     this.data.Lat= '';
     this.data.Lng= '';
     this.data.response = '';
-    
-  
     this.http = http;
 
   }
+  //Méthode qui permet d'envoyer les informations dans la base de données
   Submit() {
-    var link = 'http://selfeden.fr/api1.php';
+    //variable contenant le lien de notre page php(page dans laquelle nous effectuer chacune des requêtes)
+    var link = 'http://selfeden.fr/apiInstall.php';
+    //variable contenant les données que nous allons poster
     var myData = JSON.stringify({userId: this.data.userId,Mac_Address: this.data.Mac_Address,date: this.data.date,SerialNumber: this.data.SerialNumber, sensorName: this.data.sensorName,Lat: this.data.Lat, Lng: this.data.Lng});
-    //var myData1 = JSON.stringify({Position_GPS: this.data.Position_GPS});
-    //var myData2 = JSON.stringify({Mac_Address: this.data.Mac_Address});
-    //var myData3 = JSON.stringify({date: this.data.date});
-    //var myData4 = JSON.stringify({sensorName: this.data.sensorName});
-    //var myData5 = JSON.stringify({N_Série: this.data.N_Série});
+   
     let headers = new Headers(
       {
         'Content-Type' : 'application/json'
@@ -52,7 +52,7 @@ export class SendPage {
     let options = new RequestOptions({ headers: headers });
     
   
-    
+    //Méthode nous permettant d'effectuer nos post
     return new Promise((resolve, reject) => {
       this.http.post(link, myData, options)
       .toPromise()
@@ -70,11 +70,13 @@ export class SendPage {
     });
     
     }
+
+    //Méthode nous permettant d'aller sur une autre page 
     test() {
       this.navCtrl.push(AboutPage);
     }
     
-
+  // Méthode permettant de charger la page 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SendPage');
     this.geo.getCurrentPosition().then( pos => {

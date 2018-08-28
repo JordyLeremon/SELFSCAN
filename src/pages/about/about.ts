@@ -50,6 +50,7 @@ export class AboutPage {
       public http: Http,
       public geo: Geolocation,
       private ngZone: NgZone) {
+        //Assignation des variables
         this.data1.Mac_Address= '';
         this.data1.date= moment().format();
         this.data1.sensorName= '';
@@ -58,15 +59,15 @@ export class AboutPage {
         this.data1.response = '';
         this.userId = navParams.get('userId');
         this.SerialNumber= navParams.get('SerialNumber');
-        
-      
+
         this.http = http;
+
         let device = navParams.get('device');
         
             this.setStatus('Connecting to ' + device.name || device.id);
         
             // This is not a promise, the device can call disconnect after it connects, so it's an observable
-            this.ble.connect(device.id).subscribe(
+            this.ble.connect(device.id).subscribe( //Méthode permettant d'établir la connection avec un device
               
               peripheral => this.onConnected(peripheral),
               peripheral => setTimeout(this.setStatus.bind(this), 600, 'The peripheral unexpectedly disconnected'),
@@ -85,33 +86,25 @@ export class AboutPage {
             this.peripheral = peripheral;
             this.setStatus('Connected to ' + (peripheral.name || peripheral.id));
             
-            /*let subscription = this.ble.startNotification(peripheral.id, WRITE_CHARACTERISTIC_UUID, READ_CHARACTERISTIC_UUID);
             
-                    subscription.subscribe(buffer => {
-                        let data = new Uint32Array(buffer);
-                        console.log(data[0]); 
-                    })*/
-
+            //Méthode permetant d'écrire dans le device
             this.ble.write(this.peripheral.id, WRITE_SERVICE_UUID, WRITE_CHARACTERISTIC_UUID, REALTIME_META_VALUE).then(
               data => this.onTemperatureChange(REALTIME_META_VALUE),
               () => this.showAlert('Unexpected Error', 'nothing')
             )
            
-            // Read the current value of the temperature characteristic
+            // Read the current value of the characteristic
             this.ble.read(this.peripheral.id, READ_SERVICE_UUID, READ_CHARACTERISTIC_UUID).then(
               data => this.onTemperatureChange(data),
               () => this.showAlert('Unexpected Error', 'Failed to get temperature')
             )
-            // Subscribe for notifications when the temperature changes
-            
-            //this.ble.startNotification(this.peripheral.id, '1a00', '1a01').subscribe(buffer => { 
-             // console.log(String.fromCharCode.apply(null, new Uint8Array(buffer))); });
            
           }
         
+          //Méthode permettant de convertir et d'afficher les bonnes données
           onTemperatureChange(buffer:ArrayBuffer) {
             
-                // Temperature is a 4 byte floating point value
+                //Déclaration de la variable data que nous allons utiliser pour nos données
                 var data = new Uint8Array(buffer);
                 console.log(data[0]);
             
@@ -127,9 +120,11 @@ export class AboutPage {
               }
           
 
-        
+              //Méthode qui permet d'envoyer les informations dans la base de données
               Submit() {
+                //variable contenant le lien de notre page php(page dans laquelle nous effectuer chacune des requêtes)
                 var link = 'http://selfeden.fr/api1.php';
+                //variable contenant les données que nous allons poster
                 var myData = JSON.stringify({userId: this.userId,Mac_Address: this.data1.Mac_Address,date: this.data1.date,SerialNumber: this.SerialNumber, sensorName: this.data1.sensorName,Lat: this.data1.Lat, Lng: this.data1.Lng});
                 
                 let headers = new Headers(
@@ -139,7 +134,7 @@ export class AboutPage {
                 let options = new RequestOptions({ headers: headers });
                 
               
-                
+                //Méthode nous permettant d'effectuer nos post
                 return new Promise((resolve, reject) => {
                   this.http.post(link, myData, options)
                   .toPromise()
@@ -158,8 +153,8 @@ export class AboutPage {
                 
                 }
           
-          // Disconnect peripheral when leaving the page
-         
+          
+          // Méthode permettant de charger la page
           ionViewDidLoad() {
            
             console.log("ionViewDidLoad AboutPage");
@@ -169,6 +164,7 @@ export class AboutPage {
             }).catch( err => console.log(err));
           }
           
+          // Disconnect peripheral when leaving the page
           ionViewWillLeave() {
             console.log('ionViewWillLeave disconnecting Bluetooth');
             this.ble.disconnect(this.peripheral.id).then(
@@ -177,7 +173,7 @@ export class AboutPage {
             )
           }
        
-
+          //Methode permettant d'afficher une bulle avec un message lorsque le périphérique s'est déconnecté
           showAlert(title, message) {
             let alert = this.alertCtrl.create({
               title: title,
@@ -187,6 +183,7 @@ export class AboutPage {
             alert.present();
           }
         
+          //Méthode permettant de créer le message 
           setStatus(message) {
             console.log(message);
             this.ngZone.run(() => {

@@ -12,7 +12,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 })
 export class HomePage {
   
-  
+  //Déclaration des variables
   devices: any[] = [];
   userId: any[] = [];
   SerialNumber: any[] = [];
@@ -28,12 +28,13 @@ export class HomePage {
                 this.SerialNumber = navParams.get('SerialNumber');
   }
 
-
+// Méthode permettant de charger la page
   ionViewDidEnter() {
     console.log('ionViewDidEnter');
     this.scan();
   }
 
+//Méthode permettant d'effectuer le scan des devices à proximités
   scan() {
     this.setStatus('Recherche de device à proximité');
     this.devices = [];  // clear list
@@ -42,10 +43,10 @@ export class HomePage {
       error => this.scanError(error)
     );
 
-    setTimeout(this.setStatus.bind(this), 5000, 'Scan complete');
+    setTimeout(this.setStatus.bind(this), 5000, 'Scan complete');// fonction permettant de définir un temps de scan des devices puis d'afficher un message une fois ce temps écoulés
   }
 
-
+//Méthode permettant d'afficher les devices ayant été scanné au préalable
   onDeviceDiscovered(device) {
     console.log('Discovered ' + JSON.stringify(device, null, 2));
     this.ngZone.run(() => {
@@ -64,6 +65,7 @@ export class HomePage {
     toast.present();
   }
 
+  //Méthode permettant de créer le message d'erreur si nous n'avons pas les permissions nécessaires
   setStatus(message) {
     console.log(message);
     this.ngZone.run(() => {
@@ -71,6 +73,7 @@ export class HomePage {
     });
   }
 
+  //Méthode permettant d'afficher les informations relatives au devices en questions
   deviceSelected(device) {
     console.log(JSON.stringify(device) + ' selected');
     this.navCtrl.push(AboutPage, {
@@ -86,12 +89,9 @@ export class HomePage {
   
     
   
-
+//Méthode permettant d'obtenir la position actuelle du capteur
   getLocation(){
     this.geolocation.getCurrentPosition().then((res) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
-      //let location= 'lat'+ res.coords.latitude +'lang'+ res.coords.longitude;
       let location='lat '+res.coords.latitude+' lang '+res.coords.longitude;
       let toast = this.toastCtrl.create({
         message: location,
@@ -103,9 +103,11 @@ export class HomePage {
     console.log('Error getting location', error);
     });
   }
+
+  // Méthode permettant de charger la page
   ionViewDidLoad() {
     console.log("ionViewDidLoad AboutPage");
-    //this.getLocation();
+    
     
   }
   

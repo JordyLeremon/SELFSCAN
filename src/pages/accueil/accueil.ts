@@ -20,12 +20,17 @@ export class AccueilPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  // Méthode permettant de charger la page
   ionViewDidLoad() {
     console.log('ionViewDidLoad AccueilPage');
   }
+  
+  //Méthode nous permettant d'aller sur une autre page
   Submit() {
     this.navCtrl.push(ContactPage)
   }
+
+  //Méthode nous permettant d'aller sur une autre page
   Send() {
     this.navCtrl.push(ScanPage)
   }
