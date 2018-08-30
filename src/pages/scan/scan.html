@@ -123,6 +123,52 @@
       </ion-item>
       
   </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-label>nb_capteur:</ion-label>
+        <ion-input type="number" [(ngModel)]="this.data09.nb_capteur" name="nb_capteur" ></ion-input>
+      </ion-item>
+    </ion-list>
+      <ion-list>
+        <ion-label>Valeur</ion-label>
+        <ion-item>
+          <ion-label>Temp</ion-label>
+          <ion-checkbox [(ngModel)]="this.data01.VTemp"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Lux</ion-label>
+          <ion-checkbox [(ngModel)]="this.data03.VLux"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Ec</ion-label>
+          <ion-checkbox [(ngModel)]="this.data05.VEc"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>HR</ion-label>
+          <ion-checkbox [(ngModel)]="this.data07.VHR"></ion-checkbox>
+        </ion-item>
+        <ion-label>Moyenne</ion-label>
+        <ion-item>
+          <ion-label>Temp</ion-label>
+          <ion-checkbox [(ngModel)]="this.data02.MTemp" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Lux</ion-label>
+          <ion-checkbox [(ngModel)]="this.data04.MLux"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Ec</ion-label>
+          <ion-checkbox [(ngModel)]="this.data06.MEc" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>HR</ion-label>
+          <ion-checkbox [(ngModel)]="this.data08.MHR"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+      </ion-card>
+
     <button id="choiceButton" ion-button color="tahiry" round (click)='Submit()'>Valider</button>
-    <button id="choiceButton" ion-button color="tahiry" round (click)='nextpage()'>Valider</button>
+    
   </ion-content>

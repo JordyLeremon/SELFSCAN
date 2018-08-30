@@ -16,28 +16,28 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EnvoiPage {
     //Déclaration des variables
-    data1: any = {};
-    data2: any = {};
-    data3: any = {};
-    data4: any = {};
-    data5: any = {};
-    data6: any = {};
-    data7: any = {};
-    data8: any = {};
-    data9: any = {};
+    data01: any = {};
+    data02: any = {};
+    data03: any = {};
+    data04: any = {};
+    data05: any = {};
+    data06: any = {};
+    data07: any = {};
+    data08: any = {};
+    data09: any = {};
    
   
     constructor(public navCtrl: NavController, public navParams: NavParams,  public http: Http) {
       //Assignation des variables
-      this.data1.VTemp = '';
-      this.data2.MTemp = '';
-      this.data3.VLux = '';
-      this.data4.MLux = '';
-      this.data5.VEc = '';
-      this.data6.MEc = '';
-      this.data7.VHR = '';
-      this.data8.MHR = '';
-      this.data9.nb_capteur = '';
+      this.data01.VTemp = '';
+      this.data02.MTemp = '';
+      this.data03.VLux = '';
+      this.data04.MLux = '';
+      this.data05.VEc = '';
+      this.data06.MEc = '';
+      this.data07.VHR = '';
+      this.data08.MHR = '';
+      this.data09.nb_capteur = '';
   
       this.http = http;
     }
@@ -48,7 +48,7 @@ export class EnvoiPage {
       //variable contenant le lien de notre page php(page dans laquelle nous effectuer chacune des requêtes)
       var link = 'http://selfeden.fr/apiConfig.php';
       //variable contenant les données que nous allons poster
-      var myData = JSON.stringify({VTemp: this.data1.VTemp, VLux:  this.data3.VLux, VEc:  this.data5.VEc,  VHR:  this.data7.VHR, MTemp: this.data2.MTemp, MLux:  this.data4.MLux, MEc:  this.data6.MEc, MHR:  this.data8.MHR, nb_capteur: this.data9.nb_capteur});
+      var myData = JSON.stringify({VTemp: this.data01.VTemp, VLux:  this.data03.VLux, VEc:  this.data05.VEc,  VHR:  this.data07.VHR, MTemp: this.data02.MTemp, MLux:  this.data04.MLux, MEc:  this.data06.MEc, MHR:  this.data08.MHR, nb_capteur: this.data09.nb_capteur});
       
       console.log(myData);
       
