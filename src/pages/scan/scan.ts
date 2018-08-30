@@ -42,7 +42,9 @@ export class ScanPage {
   data07: any = {};
   data08: any = {};
   data09: any = {};
-
+  data010: any = {};
+  data011: any = {};
+  
   constructor(public navCtrl: NavController, private barcodeScanner: BarcodeScanner, public navParams: NavParams, 
     public http: Http) {
 
@@ -73,6 +75,8 @@ export class ScanPage {
       this.data07.VHR = '';
       this.data08.MHR = '';
       this.data09.nb_capteur = '';
+      this.data010.env = '';
+      this.data011.env_note = '';
       this.http= http;
 
   }
@@ -95,7 +99,7 @@ Submit() {
 //variable contenant le lien de notre page php(page dans laquelle nous effectuer chacune des requêtes)
   var link = 'http://selfeden.fr/apiConfig.php';
   //variable contenant les données que nous allons poster
-  var myData = JSON.stringify({Mac_Address: this.data1.Mac_Address, Mac_Address2:  this.data2.Mac_Address, Mac_Address3:  this.data3.Mac_Address, Mac_Address4:  this.data4.Mac_Address, Mac_Address5:  this.data5.Mac_Address, Mac_Address6:  this.data6.Mac_Address, Mac_Address7:  this.data7.Mac_Address, Mac_Address8:  this.data8.Mac_Address, Mac_Address9:  this.data9.Mac_Address, Mac_Address10:  this.data10.Mac_Address, Mac_Address11:  this.data11.Mac_Address, Mac_Address12:  this.data12.Mac_Address, Mac_Address13:  this.data13.Mac_Address, Mac_Address14:  this.data14.Mac_Address, Num_serie:  this.data15.Num_serie, Sim_Card: this.data16.Sim_Card, Num_user: this.data17.Num_user, VTemp: this.data01.VTemp, VLux:  this.data03.VLux, VEc:  this.data05.VEc,  VHR:  this.data07.VHR, MTemp: this.data02.MTemp, MLux:  this.data04.MLux, MEc:  this.data06.MEc, MHR:  this.data08.MHR, nb_capteur: this.data09.nb_capteur});
+  var myData = JSON.stringify({Mac_Address: this.data1.Mac_Address, Mac_Address2:  this.data2.Mac_Address, Mac_Address3:  this.data3.Mac_Address, Mac_Address4:  this.data4.Mac_Address, Mac_Address5:  this.data5.Mac_Address, Mac_Address6:  this.data6.Mac_Address, Mac_Address7:  this.data7.Mac_Address, Mac_Address8:  this.data8.Mac_Address, Mac_Address9:  this.data9.Mac_Address, Mac_Address10:  this.data10.Mac_Address, Mac_Address11:  this.data11.Mac_Address, Mac_Address12:  this.data12.Mac_Address, Mac_Address13:  this.data13.Mac_Address, Mac_Address14:  this.data14.Mac_Address, Num_serie:  this.data15.Num_serie, Sim_Card: this.data16.Sim_Card, Num_user: this.data17.Num_user, VTemp: this.data01.VTemp, VLux:  this.data03.VLux, VEc:  this.data05.VEc,  VHR:  this.data07.VHR, MTemp: this.data02.MTemp, MLux:  this.data04.MLux, MEc:  this.data06.MEc, MHR:  this.data08.MHR, nb_capteur: this.data09.nb_capteur, env: this.data010.env, env_note: this.data011.env_note});
   
   
   let headers = new Headers(
